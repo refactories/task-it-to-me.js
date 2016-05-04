@@ -67,7 +67,7 @@ test('application displays a menus and quits on q', function(test) {
   testStreams.mockInput(['q']);
 });
 
-test.skip('Unknown command when trying to list project and there are no projects', function(test) {
+test('Unknown command when trying to list project and there are no projects', function(test) {
   setup();
   test.plan(1);
 
