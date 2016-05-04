@@ -15,7 +15,15 @@ function setup() {
   app = new App(testStreams.outputStream, testStreams.inputStream);
 }
 
-function includesProjectMenu(test, output) {
+function includesReducedProjectMenu(test, output) {
+  test.match(output, "a   Add a new project");
+  test.notMatch(output, "ls  List all project");
+  test.notMatch(output, "d   Delete a project");
+  test.notMatch(output, "e   Edit a project");
+  test.match(output, "q   Quit the app");
+}
+
+function includesFullProjectMenu(test, output) {
   test.match(output, "a   Add a new project");
   test.match(output, "ls  List all project");
   test.match(output, "d   Delete a project");
@@ -23,7 +31,17 @@ function includesProjectMenu(test, output) {
   test.match(output, "q   Quit the app");
 }
 
-function includesTaskMenu(test, output) {
+function includesReducedTaskMenu(test, output) {
+  test.match(output, 'c   Change the project name');
+  test.match(output, 'a   Add a new task');
+  test.notMatch(output, 'ls  List all tasks');
+  test.notMatch(output, 'd   Delete a task');
+  test.notMatch(output, 'e   Edit a task');
+  test.notMatch(output, 'f   Finish a task');
+  test.match(output, 'b   Back to Projects menu');
+}
+
+function includesFullTaskMenu(test, output) {
   test.match(output, 'c   Change the project name');
   test.match(output, 'a   Add a new task');
   test.match(output, 'ls  List all tasks');
@@ -43,7 +61,7 @@ test('application displays a menus and quits on q', function(test) {
 
   app.run(function() {
     test.match(testStreams.plainOutput(), "Welcome to Taskitome!");
-    includesProjectMenu(test, testStreams.plainOutput());
+    includesReducedProjectMenu(test, testStreams.plainOutput());
   });
 
   testStreams.mockInput(['q']);
@@ -139,9 +157,9 @@ test('project menu displayed after project commands', function(test) {
 
     test.equal(numberOfMenus, 3);
 
-    includesProjectMenu(test, parts[1]);
-    includesProjectMenu(test, parts[2]);
-    includesProjectMenu(test, parts[3]);
+    includesReducedProjectMenu(test, parts[1]);
+    includesFullProjectMenu(test, parts[2]);
+    includesFullProjectMenu(test, parts[3]);
   });
 
   testStreams.mockInput(['a', 'House work', 'ls', 'q']);
@@ -163,7 +181,7 @@ test('editing a project by name shows tasks menu', function(test) {
   test.plan(7);
 
   app.run(function() {
-    includesTaskMenu(test, testStreams.plainOutput());
+    includesReducedTaskMenu(test, testStreams.plainOutput());
   });
 
   testStreams.mockInput(['a', 'House work', 'e', 'House work', 'q']);
@@ -174,7 +192,7 @@ test('editing a project by id shows tasks menu', function(test) {
   test.plan(8);
 
   app.run(function() {
-    includesTaskMenu(test, testStreams.plainOutput());
+    includesReducedTaskMenu(test, testStreams.plainOutput());
     test.match(testStreams.plainOutput(), "Editing project: 'House work'");
   });
 
@@ -377,9 +395,9 @@ test('task menu displayed after each task commands', function(test) {
 
     test.equal(numberOfMenus, 3);
 
-    includesTaskMenu(test, parts[1]);
-    includesTaskMenu(test, parts[2]);
-    includesTaskMenu(test, parts[3]);
+    includesReducedTaskMenu(test, parts[1]);
+    includesFullTaskMenu(test, parts[2]);
+    includesFullTaskMenu(test, parts[3]);
   });
 
   testStreams.mockInput(['a', 'House work', 'e', 'House work', 'a', 'feed the dog', 'ls', 'q']);
