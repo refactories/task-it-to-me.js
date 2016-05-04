@@ -231,7 +231,7 @@ test('editing a task that does not exist', function(test) {
     test.match(testStreams.plainOutput(), "Task doesn't exist: 'clean out the freezer'");
   });
 
-  testStreams.mockInput(['a', 'House work', 'e', 'House work', 'e', 'clean out the freezer', 'q']);
+  testStreams.mockInput(['a', 'House work', 'e', 'House work', 'a', 'clean kitchen', 'e', 'clean out the freezer', 'q']);
 });
 
 test('editing a task by name that does exist', function(test) {
