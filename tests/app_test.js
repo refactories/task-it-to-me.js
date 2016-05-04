@@ -67,12 +67,12 @@ test('application displays a menus and quits on q', function(test) {
   testStreams.mockInput(['q']);
 });
 
-test('failure message when listing project and there are no projects', function(test) {
+test.skip('Unknown command when trying to list project and there are no projects', function(test) {
   setup();
   test.plan(1);
 
   app.run(function() {
-    test.match(testStreams.plainOutput(), "No projects created");
+    test.match(testStreams.plainOutput(), "Unknown command");
   });
 
   testStreams.mockInput(['ls', 'q']);
@@ -100,18 +100,6 @@ test('listing projects' , function(test) {
   });
 
   testStreams.mockInput(['a', 'Cat Servitude', 'a', 'House work', 'ls', 'q']);
-});
-
-test('deleting projects when no projects', function(test) {
-  setup();
-  test.plan(2);
-
-  app.run(function() {
-    test.match(testStreams.plainOutput(), 'No projects created');
-    test.match(testStreams.plainOutput(), "Can't delete a project");
-  });
-
-  testStreams.mockInput(['d', 'q']);
 });
 
 test('deleting a project by name when there is a project', function(test) {
@@ -223,18 +211,7 @@ test('adding a task', function(test) {
 });
 
 
-test('listing tasks when no tasks exists', function(test) {
-  setup();
-  test.plan(1);
-
-  app.run(function() {
-    test.match(testStreams.plainOutput(), "No tasks created in 'House work'");
-  });
-
-  testStreams.mockInput(['a', 'House work', 'e', 'House work', 'ls', 'q']);
-});
-
-test('listing tasks when tasks exist', function(test) {
+test('listing tasks', function(test) {
   setup();
   test.plan(1);
 
@@ -284,17 +261,6 @@ test('editing a task by id that does exist', function(test) {
   testStreams.mockInput(['a', 'House work', 'e', 'House work', 'a', 'clean out the freezer', 'e', '1', 'clean out fridge', 'ls', 'q']);
 });
 
-test('deleting a task when tasks are empty', function(test) {
-  setup();
-  test.plan(1);
-
-  app.run(function() {
-    test.match(testStreams.plainOutput(), "No tasks created in 'House work'");
-  });
-
-  testStreams.mockInput(['a', 'House work', 'e', 'House work', 'd', 'clean out the freezer', 'q']);
-});
-
 test('deleting a task that does not exist exists', function(test) {
   setup();
   test.plan(1);
@@ -326,17 +292,6 @@ test('deleting a task that exists by id', function(test) {
   });
 
   testStreams.mockInput(['a', 'House work', 'e', 'House work', 'a', 'clean out the freezer', 'd', '1', 'ls', 'q']);
-});
-
-test('finishing a task when tasks are empty', function(test) {
-  setup();
-  test.plan(1);
-
-  app.run(function() {
-    test.match(testStreams.plainOutput(), "Task not found: 'clean out the freezer'");
-  });
-
-  testStreams.mockInput(['a', 'House work', 'e', 'House work', 'f', 'clean out the freezer', 'q']);
 });
 
 test('finishing a task that does not exist exists', function(test) {
