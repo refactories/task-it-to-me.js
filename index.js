@@ -1,4 +1,2 @@
-var App = require(__dirname + "/lib/app");
-new App(process.stdout, process.stdin).run(function() {
-  process.exit();
-});
+var App = require('./lib/app')
+new App(process.stdout, process.stdin).run(process.exit)
