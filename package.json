@@ -4,11 +4,12 @@
   "description": "Command line app for making tasks organized by projects",
   "main": "index.js",
   "scripts": {
+    "lint": "node_modules/.bin/standard",
+    "lint:fix": "node_modules/.bin/standard --fix",
     "start": "node index.js",
-    "test": "node_modules/tape/bin/tape tests/**/*_test.js | node_modules/faucet/bin/cmd.js",
-    "test:debug": "node_modules/tape/bin/tape tests/**/*_test.js",
-    "coverage": "node_modules/tap/bin/run.js --coverage-report=html tests/**/*_test.js",
-    "metrics": "node_modules/plato/bin/plato -r -d metrics lib; open metrics/index.html"
+    "test": "node_modules/.bin/mocha && npm run lint",
+    "coverage": "node_modules/.bin/nyc --coverage-report=html npm test",
+    "metrics": "node_modules/.bin/plato -r -d metrics lib; open metrics/index.html"
   },
   "repository": {
     "type": "git",
@@ -21,9 +22,19 @@
   "author": "Derek, genius in residence",
   "license": "MIT",
   "devDependencies": {
-    "faucet": "0.0.1",
-    "plato": "^1.5.0",
-    "tap": "^5.7.0",
-    "tape": "^4.5.1"
+    "chai": "^4.2.0",
+    "eslint": "^6.8.0",
+    "mocha": "^7.1.1",
+    "nyc": "^15.0.0",
+    "plato": "^1.7.0",
+    "standard": "^14.3.3"
+  },
+  "standard": {
+    "globals": [
+      "describe",
+      "it",
+      "beforeEach",
+      "afterEach"
+    ]
   }
 }

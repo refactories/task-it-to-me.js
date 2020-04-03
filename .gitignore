@@ -2,3 +2,5 @@ node_modules
 coverage
 metrics
 .nyc_output
+
+.vscode
