@@ -1,7 +1,7 @@
 const Stream = require('stream')
 
 const setupOutputStream = () => {
-  var outputStream = new Stream.Writable()
+  const outputStream = new Stream.Writable()
 
   outputStream.output = ''
 
@@ -14,7 +14,7 @@ const setupOutputStream = () => {
 }
 
 const setupInputStream = () => {
-  var inputStream = new Stream.Readable()
+  const inputStream = new Stream.Readable()
   inputStream.resume = function () { /* no-op */ }
 
   return inputStream

@@ -1,2 +1,2 @@
-var App = require('./lib/app')
+const App = require('./lib/app')
 new App(process.stdout, process.stdin).run(process.exit)
